@@ -1,6 +1,7 @@
-from flask import Flask, request
-from datetime import datetime
 import time
+from datetime import datetime
+
+from flask import Flask, request
 
 app = Flask(__name__)
 server_start = datetime.now().strftime('%H:%M:%S %d/%m/%Y')
@@ -16,20 +17,18 @@ users = {
 
 @app.route("/")
 def hello():
-    return 'Hello, User! It is MyMess. </br> <a href="/status">status</a> ' \
-           '</br> <a href="/get_messages">get_messages</a> ' \
-           '</br> <a href="/send_message">send_message</a>'
+    return 'Hello, User! Это наш мессенджер. Его <a href="/status">статус</a>'
 
 
 @app.route("/status")
 def status():
     return {
-        "name": 'MyMess',
-        "status": 'OK',
+        'status': 'OK',
+        'name': 'Skillbox Messenger',
         'server_start_time': server_start,
-        "time": datetime.now().strftime('%H:%M:%S %d/%m/%Y'),
+        'server_current_time': datetime.now().strftime('%H:%M:%S %d/%m/%Y'),
         'current_time_seconds': time.time(),
-        "users": len(users)
+        'users_count': len(users)
     }
 
 
@@ -47,7 +46,10 @@ def send_message():
 
     messages.append({'username': username, 'text': text, 'timestamp': time.time()})
 
+    # text ?
+
     return {'ok': True}
+
 
 @app.route("/get_messages")
 def get_messages():
